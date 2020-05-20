@@ -57,7 +57,7 @@ namespace WebViewTest {
             await webView.EnsureCoreWebView2Async(null);
             webView.CoreWebView2.WebMessageReceived += UpdateAddressBar;
             await webView.CoreWebView2.AddScriptToExecuteOnDocumentCreatedAsync("window.chrome.webview.postMessage(window.document.URL);");
-            // await webView.CoreWebView2.AddScriptToExecuteOnDocumentCreatedAsync("window.chrome.webview.addEventListener(\'message\', event => alert(event.data));");
+            await webView.CoreWebView2.AddScriptToExecuteOnDocumentCreatedAsync("window.chrome.webview.addEventListener(\'message\', event => alert(event.data));");
         }
 
         void UpdateAddressBar(object sender, CoreWebView2WebMessageReceivedEventArgs args) {
@@ -70,7 +70,7 @@ namespace WebViewTest {
         void UrlCheck(object sender, CoreWebView2NavigationStartingEventArgs args) {
             string uri = args.Uri;
             if (!uri.StartsWith("https://")) {
-                webView.CoreWebView2.ExecuteScriptAsync($"alert('Warning: {uri} is not safe. Try an https link for better security.')");
+                //webView.CoreWebView2.ExecuteScriptAsync($"alert('Warning: {uri} is not safe. Try an https link for better security.')");
             }
         }
 
