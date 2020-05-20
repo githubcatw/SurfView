@@ -56,14 +56,14 @@ namespace WebViewTest {
         async void InitializeAsync() {
             await webView.EnsureCoreWebView2Async(null);
             webView.CoreWebView2.WebMessageReceived += UpdateAddressBar;
-
             await webView.CoreWebView2.AddScriptToExecuteOnDocumentCreatedAsync("window.chrome.webview.postMessage(window.document.URL);");
             // await webView.CoreWebView2.AddScriptToExecuteOnDocumentCreatedAsync("window.chrome.webview.addEventListener(\'message\', event => alert(event.data));");
         }
 
         void UpdateAddressBar(object sender, CoreWebView2WebMessageReceivedEventArgs args) {
             string uri = args.TryGetWebMessageAsString();
-            addressBar.Text = uri;
+            if (uri != ntp) addressBar.Text = uri;
+            else uri = "Where do you want to go today?";
             webView.CoreWebView2.PostWebMessageAsString(uri);
         }
 
