@@ -1,0 +1,21 @@
+﻿<Window x:Class="WebViewTest.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
+        xmlns:local="clr-namespace:WebViewTest"
+        mc:Ignorable="d"
+        Title="SurfView" Height="469.626" Width="800">
+	<DockPanel>
+		<DockPanel DockPanel.Dock="Top" Height="29">
+			
+			<Button x:Name="ButtonGo"
+            DockPanel.Dock="Right"
+            Click="ButtonGo_Click"
+            Content="" FontFamily="Segoe MDL2 Assets" Width="34" />
+			<TextBox Name="addressBar" FontSize="18" Text="Where do you want to go today?"/>
+		</DockPanel>
+		<wv2:WebView2 Name="webView" Source="https://www.microsoft.com"/>
+	</DockPanel>
+</Window>
