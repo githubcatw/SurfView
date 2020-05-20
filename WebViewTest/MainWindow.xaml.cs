@@ -49,7 +49,7 @@ namespace WebViewTest {
             return false;
         }
         bool isUrl(string url) {
-            Regex reg = new Regex(@"^\w+\.\w+\/?$");
+            Regex reg = new Regex(@"^(^|\s)((https?:\/\/)?[\w-]+(\.[\w-]+)+\.?(:\d+)?(\/\S*)?)$");
             return reg.IsMatch(url);
         }
 
@@ -57,7 +57,7 @@ namespace WebViewTest {
             await webView.EnsureCoreWebView2Async(null);
             webView.CoreWebView2.WebMessageReceived += UpdateAddressBar;
             await webView.CoreWebView2.AddScriptToExecuteOnDocumentCreatedAsync("window.chrome.webview.postMessage(window.document.URL);");
-            await webView.CoreWebView2.AddScriptToExecuteOnDocumentCreatedAsync("window.chrome.webview.addEventListener(\'message\', event => alert(event.data));");
+            // await webView.CoreWebView2.AddScriptToExecuteOnDocumentCreatedAsync("window.chrome.webview.addEventListener(\'message\', event => alert(event.data));");
         }
 
         void UpdateAddressBar(object sender, CoreWebView2WebMessageReceivedEventArgs args) {
