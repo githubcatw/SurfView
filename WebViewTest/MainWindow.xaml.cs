@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -41,11 +42,15 @@ namespace WebViewTest {
             InitializeAsync();
         }
 
-        bool isValidUrl (string url) {
+        bool hasProtocol (string url) {
             foreach (string p in protocols) {
                 if (url.StartsWith(p)) return true;
             }
             return false;
+        }
+        bool isUrl(string url) {
+            Regex reg = new Regex(@"^\w+\.\w+\/?$");
+            return reg.IsMatch(url);
         }
 
         async void InitializeAsync() {
@@ -71,12 +76,15 @@ namespace WebViewTest {
 
         private void addressBar_KeyDown(object sender, KeyEventArgs e) {
             if (e.Key == Key.Enter) {
-                if (isValidUrl(addressBar.Text)) {
-                    if (webView != null && webView.CoreWebView2 != null) {
+
+                if (webView != null && webView.CoreWebView2 != null) {
+                    if (hasProtocol(addressBar.Text)) {
                         webView.CoreWebView2.Navigate(addressBar.Text);
+                    } else if (isUrl(addressBar.Text)) {
+                        webView.CoreWebView2.Navigate("http://" + addressBar.Text);
+                    } else {
+                        webView.CoreWebView2.Navigate(googlePrefix + addressBar.Text.Replace(' ', '+'));
                     }
-                } else {
-                    webView.CoreWebView2.Navigate(googlePrefix + addressBar.Text.Replace(' ', '+'));
                 }
             }
         }
