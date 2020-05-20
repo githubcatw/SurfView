@@ -10,11 +10,7 @@
 	<DockPanel>
 		<DockPanel DockPanel.Dock="Top" Height="29">
 			
-			<Button x:Name="ButtonGo"
-            DockPanel.Dock="Right"
-            Click="ButtonGo_Click"
-            Content="" FontFamily="Segoe MDL2 Assets" Width="34" />
-			<TextBox Name="addressBar" FontSize="18" Text="Where do you want to go today?"/>
+			<TextBox Name="addressBar" FontSize="18" Text="Where do you want to go today?" KeyDown="addressBar_KeyDown"/>
 		</DockPanel>
 		<wv2:WebView2 Name="webView" Source="https://www.microsoft.com"/>
 	</DockPanel>

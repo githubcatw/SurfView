@@ -48,16 +48,6 @@ namespace WebViewTest {
             return false;
         }
 
-        private void ButtonGo_Click(object sender, RoutedEventArgs e) {
-            if (isValidUrl(addressBar.Text)) {
-                if (webView != null && webView.CoreWebView2 != null) {
-                    webView.CoreWebView2.Navigate(addressBar.Text);
-                }
-            } else {
-                webView.CoreWebView2.Navigate(googlePrefix + addressBar.Text.Replace(' ', '+'));
-            }
-        }
-
         async void InitializeAsync() {
             await webView.EnsureCoreWebView2Async(null);
             webView.CoreWebView2.WebMessageReceived += UpdateAddressBar;
@@ -76,6 +66,18 @@ namespace WebViewTest {
             string uri = args.Uri;
             if (!uri.StartsWith("https://")) {
                 webView.CoreWebView2.ExecuteScriptAsync($"alert('Warning: {uri} is not safe. Try an https link for better security.')");
+            }
+        }
+
+        private void addressBar_KeyDown(object sender, KeyEventArgs e) {
+            if (e.Key == Key.Enter) {
+                if (isValidUrl(addressBar.Text)) {
+                    if (webView != null && webView.CoreWebView2 != null) {
+                        webView.CoreWebView2.Navigate(addressBar.Text);
+                    }
+                } else {
+                    webView.CoreWebView2.Navigate(googlePrefix + addressBar.Text.Replace(' ', '+'));
+                }
             }
         }
     }
