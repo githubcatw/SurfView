@@ -32,9 +32,12 @@ namespace WebViewTest {
         };
         const string ntp = "https://ntp.msn.com/edge/ntp?locale=en&dsp=0&sp=Google";
         const string googlePrefix = "https://www.google.com/search?q=";
+        const string prompt = "Where do you want to go today?";
 
-        const string goBack = "window.history.back()";
-        const string goForward = "window.history.forward()";
+        bool isNTP = false;
+
+        const string goBack = "window.history.back();";
+        const string goForward = "window.history.forward();";
 
         public MainWindow() {
             InitializeComponent();
@@ -63,7 +66,7 @@ namespace WebViewTest {
         void UpdateAddressBar(object sender, CoreWebView2WebMessageReceivedEventArgs args) {
             string uri = args.TryGetWebMessageAsString();
             if (uri != ntp) addressBar.Text = uri;
-            else uri = "Where do you want to go today?";
+            else uri = prompt;
             webView.CoreWebView2.PostWebMessageAsString(uri);
         }
 
@@ -87,6 +90,14 @@ namespace WebViewTest {
                     }
                 }
             }
+        }
+
+        private void back_Click(object sender, RoutedEventArgs e) {
+            webView.CoreWebView2.ExecuteScriptAsync(goBack);
+        }
+
+        private void next_Click(object sender, RoutedEventArgs e) {
+            webView.CoreWebView2.ExecuteScriptAsync(goForward);
         }
     }
 }
