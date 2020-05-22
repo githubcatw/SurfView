@@ -30,7 +30,8 @@ namespace WebViewTest {
             "edge:",
             "javascript:",
             "chrome-search:",
-            "data:"
+            "data:",
+            "about:"
         };
         const string ntp = "https://ntp.msn.com/edge/ntp?locale=en&dsp=0&sp=Google";
         const string googlePrefix = "https://www.google.com/search?q=";
