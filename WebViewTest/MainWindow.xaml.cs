@@ -21,6 +21,7 @@ namespace WebViewTest {
     /// </summary>
     public partial class MainWindow : Window {
 
+        // Supported protocols.
         string[] protocols = {
             "http:",
             "https:",
@@ -33,18 +34,21 @@ namespace WebViewTest {
             "data:",
             "about:"
         };
-        const string ntp = "https://ntp.msn.com/edge/ntp?locale=en&dsp=0&sp=Google";
+        // The URL of the home page.
+        const string home = "https://ntp.msn.com/edge/ntp?locale=en&dsp=0&sp=Google";
+        // Prefix for searching on Google.
         const string googlePrefix = "https://www.google.com/search?q=";
+        // The default home page prompt.
         const string prompt = "Where do you want to go today?";
-
-        bool isNTP = false;
-
+        // JavaScript for going back and forward in the history.
         const string goBack = "window.history.back();";
         const string goForward = "window.history.forward();";
 
         public MainWindow() {
             InitializeComponent();
+            // Add listener for NavigationStarting
             webView.NavigationStarting += UrlCheck;
+            // Initialize
             InitializeAsync();
         }
 
@@ -60,15 +64,20 @@ namespace WebViewTest {
         }
 
         async void InitializeAsync() {
+            // Initialize the WebView
             await webView.EnsureCoreWebView2Async(null);
+            // Add a listener to the WebMessageReceived event
             webView.CoreWebView2.WebMessageReceived += UpdateAddressBar;
-            await webView.CoreWebView2.AddScriptToExecuteOnDocumentCreatedAsync("window.chrome.webview.postMessage(window.document.URL);");
-            // await webView.CoreWebView2.AddScriptToExecuteOnDocumentCreatedAsync("window.chrome.webview.addEventListener(\'message\', event => alert(event.data));");
+            // Add a script to run when a page is loading
+            await webView.CoreWebView2.AddScriptToExecuteOnDocumentCreatedAsync(
+                // This script just posts a message with the window's URL
+                "window.chrome.webview.postMessage(window.document.URL);"
+            );
         }
 
         void UpdateAddressBar(object sender, CoreWebView2WebMessageReceivedEventArgs args) {
             string uri = args.TryGetWebMessageAsString();
-            if (uri != ntp) addressBar.Text = uri;
+            if (uri != home) addressBar.Text = uri;
             else uri = prompt;
             webView.CoreWebView2.PostWebMessageAsString(uri);
         }
@@ -76,7 +85,7 @@ namespace WebViewTest {
         void UrlCheck(object sender, CoreWebView2NavigationStartingEventArgs args) {
             string uri = args.Uri;
             if (!uri.StartsWith("https://")) {
-                //webView.CoreWebView2.ExecuteScriptAsync($"alert('Warning: {uri} is not safe. Try an https link for better security.')");
+                
             }
         }
 
