@@ -44,6 +44,8 @@ namespace WebViewTest {
         // JavaScript for going back and forward in the history.
         const string goBack = "window.history.back();";
         const string goForward = "window.history.forward();";
+        // JavaScript for reloading the page.
+        const string refreshScript = "location.reload();";
         // A list of all loaded userscripts.
         List<string> userscripts = new List<string>();
 
@@ -151,5 +153,7 @@ namespace WebViewTest {
         private void back_Click(object sender, RoutedEventArgs e) { webView.CoreWebView2.ExecuteScriptAsync(goBack); }
         // Runs the go forward script when the Next button is pressed.
         private void next_Click(object sender, RoutedEventArgs e) { webView.CoreWebView2.ExecuteScriptAsync(goForward); }
+        // Runs the reload script when the Reload button is pressed.
+        private void refresh_Click(object sender, RoutedEventArgs e) { webView.CoreWebView2.ExecuteScriptAsync(refreshScript); }
     }
 }
