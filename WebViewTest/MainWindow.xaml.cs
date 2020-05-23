@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -43,13 +44,25 @@ namespace WebViewTest {
         // JavaScript for going back and forward in the history.
         const string goBack = "window.history.back();";
         const string goForward = "window.history.forward();";
+        // A list of all loaded userscripts.
+        List<string> userscripts = new List<string>();
 
         public MainWindow() {
             InitializeComponent();
             // Add listener for NavigationStarting
             webView.NavigationStarting += UrlCheck;
+            // Add listener for NavigationComplete to load userscripts
+            webView.NavigationCompleted += LoadUserscripts;
             // Initialize
             InitializeAsync();
+        }
+
+        async private void LoadUserscripts(object sender, CoreWebView2NavigationCompletedEventArgs e) {
+            // For each userscript:
+            foreach (string script in userscripts) {
+                // Execute it
+                await webView.ExecuteScriptAsync(script);
+            }
         }
 
         bool hasProtocol (string url) {
@@ -73,6 +86,13 @@ namespace WebViewTest {
                 // This script just posts a message with the window's URL
                 "window.chrome.webview.postMessage(window.document.URL);"
             );
+            // For each userscript:
+            foreach (string userscript in Directory.GetFiles("userscripts", "*.js")) {
+                // Read its content
+                var usContent = File.ReadAllText(userscript);
+                // Add it to the userscript list
+                userscripts.Add(usContent);
+            }
         }
 
         void UpdateAddressBar(object sender, CoreWebView2WebMessageReceivedEventArgs args) {
