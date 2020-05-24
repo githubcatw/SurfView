@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
 		mc:Ignorable="d"
-        Title="SurfView" Height="678.022" Width="1081.776">
+        Title="SurfView" Height="678" Width="1082">
 	<DockPanel>
 		<!-- Top panel -->
 		<DockPanel DockPanel.Dock="Top" Height="33">
