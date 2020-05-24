@@ -8,11 +8,11 @@
         mc:Ignorable="d"
         Title="SurfView" Height="678.022" Width="1081.776">
 	<DockPanel>
-		<DockPanel DockPanel.Dock="Top" Height="29">
-			<Button Name="back" Click="back_Click" FontFamily="Segoe MDL2 Assets" FontSize="14" Padding="5,2"></Button>
-			<Button Name="next" Click="next_Click" FontFamily="Segoe MDL2 Assets" FontSize="14" Padding="5,2"></Button>
-			<Button Name="refresh" Click="refresh_Click" FontFamily="Segoe MDL2 Assets" FontSize="14" Padding="5,2"></Button>
-			<TextBox Name="addressBar" FontSize="18" Text="Where do you want to go today?" KeyDown="addressBar_KeyDown" Padding="5,0"/>
+		<DockPanel DockPanel.Dock="Top" Height="33">
+			<Button Name="back" Click="back_Click" FontFamily="Segoe MDL2 Assets"></Button>
+			<Button Name="next" Click="next_Click" FontFamily="Segoe MDL2 Assets"></Button>
+			<Button Name="refresh" Click="refresh_Click" FontFamily="Segoe MDL2 Assets"></Button>
+			<TextBox Name="addressBar" FontSize="18" Text="Where do you want to go today?" KeyDown="addressBar_KeyDown" />
 		</DockPanel>
 		<wv2:WebView2 Name="webView" Source="https://ntp.msn.com/edge/ntp?locale=en&amp;dsp=0&amp;sp=Google"/>
 	</DockPanel>

@@ -4,6 +4,27 @@
              xmlns:local="clr-namespace:WebViewTest"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
-    </Application.Resources>
+		<!-- Style for all TextBoxes.-->
+		<Style TargetType="TextBox">
+			<!-- Set a padding -->
+			<Setter Property="Padding" Value="7,0" />
+		</Style>
+		<!-- Style for the address bar specifically. -->
+		<Style TargetType="TextBox" x:Name="addressBar">
+			<!-- Set a margin -->
+			<Setter Property="Margin" Value="3" />
+			<!-- Set a padding -->
+			<Setter Property="Padding" Value="5,0" />
+		</Style>
+		<!-- Style for all Buttons.-->
+		<Style TargetType="Button">
+			<!-- Set a padding -->
+			<Setter Property="Padding" Value="8,0" />
+		    <!-- Remove the background and borders -->
+			<Setter Property="Background" Value="Transparent" />
+			<Setter Property="BorderThickness" Value="0" />
+			<!-- Make the font larger-->
+			<Setter Property="FontSize" Value="16" />
+		</Style>
+	</Application.Resources>
 </Application>
