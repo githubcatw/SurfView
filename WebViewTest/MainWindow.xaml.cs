@@ -33,7 +33,8 @@ namespace WebViewTest {
             "javascript:",
             "chrome-search:",
             "data:",
-            "about:"
+            "about:",
+            "file:"
         };
         // The URL of the home page.
         const string home = "https://ntp.msn.com/edge/ntp?locale=en&dsp=0&sp=Google";
