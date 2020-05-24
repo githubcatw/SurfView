@@ -114,10 +114,13 @@ namespace WebViewTest {
         void UpdateAddressBar(object sender, CoreWebView2WebMessageReceivedEventArgs args) {
             // Get the received message (the URI of the current page)
             string uri = args.TryGetWebMessageAsString();
-            // If the URI isn't the homepage, set the address bar's text to it
-            if (uri != home) addressBar.Text = uri;
-            // Else set it to a prompt
-            else uri = prompt;
+            // If the URI isn't a config page:
+            if (!uri.Contains(Directory.GetCurrentDirectory().Replace('\\', '/') + "/config/")) {
+                // If the URI isn't the homepage, set the address bar's text to it
+                if (uri != home) addressBar.Text = uri;
+                // Else, set it to the browsing prompt
+                else addressBar.Text = prompt;
+            }
         }
 
         // Check a URL.
@@ -143,6 +146,10 @@ namespace WebViewTest {
                         // Navigate to "http://" + the address bar's text
                         // Secure sites should redirect us to the https version
                         webView.CoreWebView2.Navigate("http://" + addressBar.Text);
+                    // Else, if it's a config page (the text contains the sv: protocol)
+                    } else if (addressBar.Text.StartsWith("sv:")) {
+                        // Navigate to the correct config page
+                        webView.CoreWebView2.Navigate(Directory.GetCurrentDirectory() + "/config/" + addressBar.Text.Replace("sv:", "") + ".html");
                     // Else:
                     } else {
                         // Search the address bar's text with Google, replacing the spaces with plus signs
