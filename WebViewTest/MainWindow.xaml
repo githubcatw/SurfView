@@ -4,16 +4,19 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
-        xmlns:local="clr-namespace:WebViewTest"
-        mc:Ignorable="d"
+		mc:Ignorable="d"
         Title="SurfView" Height="678.022" Width="1081.776">
 	<DockPanel>
+		<!-- Top panel -->
 		<DockPanel DockPanel.Dock="Top" Height="33">
+			<!-- The 3 buttons. The values seem to be blank because the characters exist only in Segoe MDL2, a preinstalled symbol font -->
 			<Button Name="back" Click="back_Click" FontFamily="Segoe MDL2 Assets"></Button>
 			<Button Name="next" Click="next_Click" FontFamily="Segoe MDL2 Assets"></Button>
 			<Button Name="refresh" Click="refresh_Click" FontFamily="Segoe MDL2 Assets"></Button>
+			<!-- The address bar -->
 			<TextBox Name="addressBar" FontSize="18" Text="Where do you want to go today?" KeyDown="addressBar_KeyDown" />
 		</DockPanel>
+		<!-- The main WebView -->
 		<wv2:WebView2 Name="webView" Source="https://ntp.msn.com/edge/ntp?locale=en&amp;dsp=0&amp;sp=Google"/>
 	</DockPanel>
 </Window>
