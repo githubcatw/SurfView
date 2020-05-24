@@ -99,6 +99,8 @@ namespace WebViewTest {
                 // This script just posts a message with the window's URL
                 "window.chrome.webview.postMessage(window.document.URL);"
             );
+            // If there is no userscript folder, create one
+            if (!Directory.Exists("userscripts")) Directory.CreateDirectory("userscripts");
             // For each userscript:
             foreach (string userscript in Directory.GetFiles("userscripts", "*.js")) {
                 // Read its content
