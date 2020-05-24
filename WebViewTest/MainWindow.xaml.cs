@@ -125,9 +125,24 @@ namespace WebViewTest {
 
         // Check a URL.
         void UrlCheck(object sender, CoreWebView2NavigationStartingEventArgs args) {
+            // Get the URL
             string uri = args.Uri;
-            if (!uri.StartsWith("https://")) {
-                
+            // If it's a secure URL (starts with https or sftp):
+            if (uri.StartsWith("https://") || uri.StartsWith("sftp:")) {
+                // Set the padlock icon to a padlock
+                padlock.Content = "";
+                // Color it green
+                padlock.Foreground = Brushes.LightGreen;
+                // Set its tooltip to "Secure"
+                padlock.ToolTip = "Secure";
+            // Else:
+            } else {
+                // Set the padlock icon to a warning shield
+                padlock.Content = "";
+                // Color it red
+                padlock.Foreground = Brushes.Red;
+                // Set its tooltip to "Not secure"
+                padlock.ToolTip = "Not secure";
             }
         }
 

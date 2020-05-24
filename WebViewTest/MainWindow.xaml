@@ -13,6 +13,8 @@
 			<Button Name="back" Click="back_Click" FontFamily="Segoe MDL2 Assets"></Button>
 			<Button Name="next" Click="next_Click" FontFamily="Segoe MDL2 Assets"></Button>
 			<Button Name="refresh" Click="refresh_Click" FontFamily="Segoe MDL2 Assets"></Button>
+			<!-- HTTPS padlock-->
+			<Label Name="padlock" FontFamily="Segoe MDL2 Assets" FontSize="19" VerticalContentAlignment="Center"></Label>
 			<!-- The address bar -->
 			<TextBox Name="addressBar" FontSize="18" Text="Where do you want to go today?" KeyDown="addressBar_KeyDown" />
 		</DockPanel>
