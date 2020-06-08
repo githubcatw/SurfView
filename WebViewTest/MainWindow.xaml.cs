@@ -127,8 +127,9 @@ namespace WebViewTest {
         void UrlCheck(object sender, CoreWebView2NavigationStartingEventArgs args) {
             // Get the URL
             string uri = args.Uri;
-            // If it's a secure URL (starts with https or sftp):
-            if (uri.StartsWith("https:") || uri.StartsWith("sftp:") || uri.StartsWith("edge:")) {
+            // If it's a secure URL (starts with https or sftp) or a settings page (edge or sv):
+            if (uri.StartsWith("https:") || uri.StartsWith("sftp:") ||
+                uri.StartsWith("edge:") || addressBar.Text.StartsWith("sv:")) {
                 // Set the padlock icon to a padlock
                 padlock.Content = "";
                 // Color it green
