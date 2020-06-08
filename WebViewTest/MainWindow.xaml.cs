@@ -152,6 +152,7 @@ namespace WebViewTest {
             if (e.Key == Key.Enter) {
                 // If the WebView is initialized (just for safety):
                 if (webView != null && webView.CoreWebView2 != null) {
+                    addressBar.Text = addressBar.Text.Replace("‭", "");
                     // If the address bar's text has a supported protocol:
                     if (hasProtocol(addressBar.Text)) {
                         // Navigate to the text
@@ -168,7 +169,7 @@ namespace WebViewTest {
                     // Else:
                     } else {
                         // Search the address bar's text with Google, replacing the spaces with plus signs and removing the LRO
-                        webView.CoreWebView2.Navigate(googlePrefix + addressBar.Text.Replace(' ', '+').Replace("‭", ""));
+                        webView.CoreWebView2.Navigate(googlePrefix + addressBar.Text.Replace(' ', '+'));
                     }
                 }
             }
