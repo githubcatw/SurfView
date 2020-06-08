@@ -128,7 +128,7 @@ namespace WebViewTest {
             // Get the URL
             string uri = args.Uri;
             // If it's a secure URL (starts with https or sftp):
-            if (uri.StartsWith("https://") || uri.StartsWith("sftp:")) {
+            if (uri.StartsWith("https:") || uri.StartsWith("sftp:") || uri.StartsWith("edge:")) {
                 // Set the padlock icon to a padlock
                 padlock.Content = "";
                 // Color it green
