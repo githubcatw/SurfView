@@ -16,7 +16,7 @@
 			<!-- HTTPS padlock-->
 			<Label Name="padlock" FontFamily="Segoe MDL2 Assets" FontSize="19" VerticalContentAlignment="Center"></Label>
 			<!-- The address bar -->
-			<TextBox Name="addressBar" FontSize="18" Text="Where do you want to go today?" KeyDown="addressBar_KeyDown" ToolTip="Enter a URL or a search query"/>
+			<TextBox Name="addressBar" FontSize="18" Text="Where do you want to go today?" KeyDown="addressBar_KeyDown" ToolTip="Enter a URL or a search query" PreviewMouseDown="addressBar_PreviewMouseDown"/>
 		</DockPanel>
 		<!-- The main WebView -->
 		<wv2:WebView2 Name="webView" Source="https://ntp.msn.com/edge/ntp?locale=en&amp;dsp=0&amp;sp=Google"/>

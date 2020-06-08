@@ -167,8 +167,8 @@ namespace WebViewTest {
                         webView.CoreWebView2.Navigate(Directory.GetCurrentDirectory() + "/config/" + addressBar.Text.Replace("sv:", "") + ".html");
                     // Else:
                     } else {
-                        // Search the address bar's text with Google, replacing the spaces with plus signs
-                        webView.CoreWebView2.Navigate(googlePrefix + addressBar.Text.Replace(' ', '+'));
+                        // Search the address bar's text with Google, replacing the spaces with plus signs and removing the LRO
+                        webView.CoreWebView2.Navigate(googlePrefix + addressBar.Text.Replace(' ', '+').Replace("‭", ""));
                     }
                 }
             }
@@ -180,5 +180,10 @@ namespace WebViewTest {
         private void next_Click(object sender, RoutedEventArgs e) { webView.CoreWebView2.ExecuteScriptAsync(goForward); }
         // Runs the reload script when the Reload button is pressed.
         private void refresh_Click(object sender, RoutedEventArgs e) { webView.CoreWebView2.ExecuteScriptAsync(refreshScript); }
+        // Fires when the address bar is clicked.
+        private void addressBar_PreviewMouseDown(object sender, MouseButtonEventArgs e) {
+            // Set the address bar's text to a left-right override if we're on the homepage
+            if (addressBar.Text == prompt) addressBar.Text = "‭";
+        }
     }
 }
