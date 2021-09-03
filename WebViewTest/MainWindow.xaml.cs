@@ -53,12 +53,17 @@ namespace WebViewTest {
         // Ran when the window is loaded.
         public MainWindow() {
             InitializeComponent();
-            // Add listener for NavigationStarting
+            // Add listeners for NavigationStarting
             webView.NavigationStarting += UrlCheck;
             // Add listener for NavigationComplete to load userscripts
             webView.NavigationCompleted += RunUserscripts;
             // Initialize
             InitializeAsync();
+        }
+
+        private void NavigationComplete(object sender, CoreWebView2NavigationCompletedEventArgs e) {
+            // Post the title as a message
+            webView.ExecuteScriptAsync("window.chrome.webview.postMessage(\"title=\" + window.document.title);");
         }
 
         // Run all loaded userscripts.
@@ -92,8 +97,9 @@ namespace WebViewTest {
         async void InitializeAsync() {
             // Initialize the WebView
             await webView.EnsureCoreWebView2Async(null);
-            // Add a listener to the WebMessageReceived event
+            // Add listeners to the WebMessageReceived event
             webView.CoreWebView2.WebMessageReceived += UpdateAddressBar;
+            webView.CoreWebView2.WebMessageReceived += ReadPayload;
             // Add a script to run when a page is loading
             await webView.CoreWebView2.AddScriptToExecuteOnDocumentCreatedAsync(
                 // This script just posts a message with the window's URL
@@ -120,7 +126,24 @@ namespace WebViewTest {
                 if (uri != home) addressBar.Text = uri;
                 // Else, set it to the browsing prompt
                 else addressBar.Text = prompt;
+            string msg = args.TryGetWebMessageAsString();
+            // If the message is a payload, return
+            if (msg.StartsWith(":svpl:")) return;
+                // If the URI isn't a config page:
+                if (!uri.Contains(Directory.GetCurrentDirectory().Replace('\\', '/') + "/config/")) {
+                    // If the URI isn't the homepage, set the address bar's text to it
+                    if (uri != home) addressBar.Text = uri;
+                    // Else, set it to the browsing prompt
+                    else addressBar.Text = prompt;
+                }
             }
+        // Read payloads sent by config pages
+        void ReadPayload(object sender, CoreWebView2WebMessageReceivedEventArgs args) {
+            // Get the received message
+            string uri = args.TryGetWebMessageAsString();
+            // If the message isn't a payload, return
+            if (!uri.StartsWith(":svpl:")) return;
+            MessageBox.Show(uri);
         }
 
         // Check a URL.

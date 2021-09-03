@@ -1,0 +1,21 @@
+<!-- About page. -->
+<html>
+    <head>
+        <link rel="stylesheet" href="configstyle.css" />
+    </head>
+    <body>
+        <h1>Payload test</h1>
+        <button onclick="pl()">Click me!</button>
+        <script>
+            function pl() {
+                var payload = {
+                    action: "display",
+                    data: {
+                        _message: "It works!"
+                    }
+                };
+                window.chrome.webview.postMessage(":svpl:" + JSON.stringify(payload));
+            }
+        </script>
+    </body>
+</html>
