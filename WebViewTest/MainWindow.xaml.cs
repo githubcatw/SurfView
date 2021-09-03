@@ -150,6 +150,8 @@ namespace WebViewTest {
             string uri = args.TryGetWebMessageAsString();
             // If the message isn't a payload, return
             if (!uri.StartsWith(":svpl:")) return;
+            // Remove header
+            uri = uri.Replace(":svpl:", "");
             MessageBox.Show(uri);
         }
 
