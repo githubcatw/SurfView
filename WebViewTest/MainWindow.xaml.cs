@@ -57,6 +57,8 @@ namespace WebViewTest {
             webView.NavigationStarting += UrlCheck;
             // Add listener for NavigationComplete to load userscripts
             webView.NavigationCompleted += RunUserscripts;
+            // And to get the title
+            webView.NavigationCompleted += NavigationComplete;
             // Initialize
             InitializeAsync();
         }
@@ -103,7 +105,7 @@ namespace WebViewTest {
             // Add a script to run when a page is loading
             await webView.CoreWebView2.AddScriptToExecuteOnDocumentCreatedAsync(
                 // This script just posts a message with the window's URL
-                "window.chrome.webview.postMessage(window.document.URL);"
+                "window.chrome.webview.postMessage(\"uri=\" + window.document.URL);"
             );
             // If there is no userscript folder, create one
             if (!Directory.Exists("userscripts")) Directory.CreateDirectory("userscripts");
@@ -119,16 +121,12 @@ namespace WebViewTest {
         // Update the text of the address bar.
         void UpdateAddressBar(object sender, CoreWebView2WebMessageReceivedEventArgs args) {
             // Get the received message (the URI of the current page)
-            string uri = args.TryGetWebMessageAsString();
-            // If the URI isn't a config page:
-            if (!uri.Contains(Directory.GetCurrentDirectory().Replace('\\', '/') + "/config/")) {
-                // If the URI isn't the homepage, set the address bar's text to it
-                if (uri != home) addressBar.Text = uri;
-                // Else, set it to the browsing prompt
-                else addressBar.Text = prompt;
             string msg = args.TryGetWebMessageAsString();
             // If the message is a payload, return
             if (msg.StartsWith(":svpl:")) return;
+            // If it's a URI, get the URI
+            if (msg.StartsWith("url=")) {
+                string uri = msg.Replace("url=", "");
                 // If the URI isn't a config page:
                 if (!uri.Contains(Directory.GetCurrentDirectory().Replace('\\', '/') + "/config/")) {
                     // If the URI isn't the homepage, set the address bar's text to it
@@ -137,6 +135,15 @@ namespace WebViewTest {
                     else addressBar.Text = prompt;
                 }
             }
+            // If it's a title:
+            if (msg.StartsWith("title=")) {
+                // If there is a title sent:
+                if (msg != "title=")
+                    // Update the window title
+                    Title = msg.Replace("title=", "") + " - SurfView";
+            }
+        }
+
         // Read payloads sent by config pages
         void ReadPayload(object sender, CoreWebView2WebMessageReceivedEventArgs args) {
             // Get the received message
