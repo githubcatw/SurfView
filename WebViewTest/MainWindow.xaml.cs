@@ -148,6 +148,8 @@ namespace WebViewTest {
         void ReadPayload(object sender, CoreWebView2WebMessageReceivedEventArgs args) {
             // Get the received message
             string uri = args.TryGetWebMessageAsString();
+            // If the URI isn't a config page, return
+            if (!uri.Contains(Directory.GetCurrentDirectory().Replace('\\', '/') + "/config/")) return;
             // If the message isn't a payload, return
             if (!uri.StartsWith(":svpl:")) return;
             // Remove header
